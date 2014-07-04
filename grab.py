@@ -62,6 +62,11 @@ requestBF = driver.find_element_by_id("edit-submit")
 requestBF.click()
 time.sleep(0.1)
 
-#TODO add success check
+#success check
+zonesE = driver.find_element_by_xpath("//p[contains(text(), 'You have requested zone files for the following TLDs:')]/following-sibling::p")
+
+print "Requested zones: " + zonesE.text
+
+#end
 driver.quit()
 
