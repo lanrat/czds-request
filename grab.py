@@ -65,7 +65,10 @@ time.sleep(0.1)
 #success check
 zonesE = driver.find_element_by_xpath("//p[contains(text(), 'You have requested zone files for the following TLDs:')]/following-sibling::p")
 
-print "Requested zones: " + zonesE.text
+zonesNum = len(zonesE.text.split())
+
+print "Requested %d zones: " % zonesNum
+print zonesE.text
 
 #end
 driver.quit()
