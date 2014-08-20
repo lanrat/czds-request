@@ -68,12 +68,12 @@ def request(driver):
 
 #success check
     try:
-        zonesE = driver.find_element_by_xpath("//p[contains(text(), 'You have requested zone files for the following TLDs:')]/following-sibling::p")
+        zonesE = driver.find_element_by_xpath("//p[contains(text(), 'You have requested zone files for the following TLD')]/following-sibling::p")
     except:
         #debug
         print "unable to find result text"
         print ''
-        print driver.page_source
+        print repr(driver.page_source)
     else:
         zonesNum = len(zonesE.text.split())
 
