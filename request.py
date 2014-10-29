@@ -1,18 +1,29 @@
 #!/usr/bin/env python
 
-from selenium import webdriver
 import time
 import config
 import os
+import traceback
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+import random
+import sys
 
 def getDriver():
+    dcap = dict(DesiredCapabilities.PHANTOMJS)
+    dcap["phantomjs.page.settings.userAgent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36"
     path = os.path.dirname(os.path.realpath(__file__))
-    driver = webdriver.PhantomJS(path+"/phantomjs")
-    driver.set_window_size(1024,768)
+    driver = webdriver.PhantomJS(path+"/phantomjs", desired_capabilities=dcap)
+    driver.set_window_size(1366,768)
+    time.sleep(0.5)
     return driver
 
 def request(driver):
     driver.get('https://czds.icann.org/en')
+   
+    if driver.page_source == "<html><head></head><body></body></html>":
+        print "Got blank page, exiting"
+        return
 
 #log in
     userF = driver.find_element_by_id("edit-name")
@@ -74,6 +85,7 @@ def request(driver):
         print "unable to find result text"
         print ''
         print repr(driver.page_source)
+        driver.save_screenshot('error.png')
     else:
         zonesNum = len(zonesE.text.split())
 
@@ -82,9 +94,19 @@ def request(driver):
 
 
 def run():
+    if len(sys.argv) > 1 and sys.argv[1] != '-r':
+        wait = random.random()*3600
+        time.sleep(wait)
     driver = getDriver()
     try:
         request(driver)
+    except:
+        print "error while requesting"
+        print driver.current_url
+        print ""
+        traceback.print_exc()
+        print repr(driver.page_source)
+        driver.save_screenshot('error.png')
     finally:
         driver.quit()
 
