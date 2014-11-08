@@ -18,6 +18,14 @@ def getDriver():
     time.sleep(0.5)
     return driver
 
+def getRemoteDriver():
+    driver = webdriver.Remote(
+            desired_capabilities=webdriver.DesiredCapabilities.FIREFOX,
+            command_executor='http://127.0.0.1:49153:/wd/hub'
+            )
+    time.sleep(0.5)
+    return driver
+
 def request(driver):
     driver.get('https://czds.icann.org/en')
    
@@ -97,7 +105,8 @@ def run():
     if len(sys.argv) > 1 and sys.argv[1] != '-r':
         wait = random.random()*3600
         time.sleep(wait)
-    driver = getDriver()
+    #driver = getDriver()
+    driver = getRemoteDriver()
     try:
         request(driver)
     except:
