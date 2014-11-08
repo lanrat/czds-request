@@ -5,15 +5,12 @@ import config
 import os
 import traceback
 from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import random
 import sys
 
 def getDriver():
-    dcap = dict(DesiredCapabilities.PHANTOMJS)
-    dcap["phantomjs.page.settings.userAgent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36"
     path = os.path.dirname(os.path.realpath(__file__))
-    driver = webdriver.PhantomJS(path+"/phantomjs", desired_capabilities=dcap)
+    driver = webdriver.PhantomJS(path+"/phantomjs")
     driver.set_window_size(1366,768)
     time.sleep(0.5)
     return driver
@@ -21,7 +18,7 @@ def getDriver():
 def getRemoteDriver():
     driver = webdriver.Remote(
             desired_capabilities=webdriver.DesiredCapabilities.FIREFOX,
-            command_executor='http://127.0.0.1:49153:/wd/hub'
+            command_executor='http://127.0.0.1:4444:/wd/hub'
             )
     time.sleep(0.5)
     return driver
