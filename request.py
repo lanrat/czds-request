@@ -95,13 +95,10 @@ def request(driver):
         zonesNum = len(zonesE.text.split())
 
         print "Requested %d zones: " % zonesNum
-        print zonesE.text
+        print zonesE.text.upper()
 
 
 def run():
-    if len(sys.argv) > 1 and sys.argv[1] != '-r':
-        wait = random.random()*3600
-        time.sleep(wait)
     #driver = getDriver()
     driver = getRemoteDriver()
     try:
