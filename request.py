@@ -100,18 +100,21 @@ def request(driver):
 
 def run():
     #driver = getDriver()
-    driver = getRemoteDriver()
     try:
-        request(driver)
+        driver = getRemoteDriver()
     except:
-        print "error while requesting"
-        print driver.current_url
-        print ""
-        traceback.print_exc()
-        print repr(driver.page_source)
-        driver.save_screenshot('error.png')
-    finally:
-        driver.quit()
+        print "FAIL: Unable to connect to Driver"
+    else:
+        try:
+            request(driver)
+        except:
+            print "error while requesting"
+            print driver.current_url
+            print ""
+            traceback.print_exc()
+            print repr(driver.page_source)
+        finally:
+            driver.quit()
 
 if __name__ == "__main__":
     run()
