@@ -1,4 +1,5 @@
 *.pyc
-*.png
 *.log
+error.png
+error.html
 config.py

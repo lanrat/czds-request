@@ -106,7 +106,7 @@ def request(driver):
     driver.step = "final submit"
     requestBF = driver.find_element_by_id("edit-submit")
     requestBF.click()
-    time.sleep(5)
+    time.sleep(20)
 
     #success check
     driver.step = "success check"
