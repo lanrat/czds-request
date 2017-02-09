@@ -6,7 +6,7 @@ services:
             context: .
         image: lanrat/czdap-request
         volumes:
-            - ./config.py:/usr/src/czdap-request/config.py:ro
+            - ./config.py:/usr/src/czds-request/config.py:ro
         depends_on:
             - selenium
 

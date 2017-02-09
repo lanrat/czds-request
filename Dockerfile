@@ -4,8 +4,8 @@ MAINTAINER Ian Foster <ian@vorsk.com>
 # install python-selenium
 RUN pip install selenium
 
-ADD request.py /usr/src/czdap-request/
+ADD request.py /usr/src/czds-request/
 
-WORKDIR /usr/src/czdap-request/
+WORKDIR /usr/src/czds-request/
 
 CMD ["python", "request.py"]
