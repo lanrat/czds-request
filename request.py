@@ -19,7 +19,7 @@ def getDriver():
 def getRemoteDriver():
     driver = webdriver.Remote(
             desired_capabilities=webdriver.DesiredCapabilities.FIREFOX,
-            command_executor='http://127.0.0.1:4444:/wd/hub'
+            command_executor='http://selenium:4444:/wd/hub'
             )
     time.sleep(0.5)
     return driver

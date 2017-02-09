@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+    bot:
+        build:
+            context: .
+        image: lanrat/czdap-request
+        volumes:
+            - ./config.py:/usr/src/czdap-request/config.py:ro
+        depends_on:
+            - selenium
+
+    selenium:
+        image: selenium/standalone-firefox
+
