@@ -26,6 +26,7 @@ def getRemoteDriver():
 
 def request(driver):
     driver.get('https://czds.icann.org/en')
+    time.sleep(5)
    
     if driver.page_source == "<html><head></head><body></body></html>":
         print "Got blank page, exiting"
@@ -43,7 +44,7 @@ def request(driver):
     driver.step = "log-in submit"
     submitF = driver.find_element_by_id("edit-submit")
     submitF.click()
-    time.sleep(0.1)
+    time.sleep(2)
 
     # auth check
     driver.step = "log-in check"
@@ -60,7 +61,7 @@ def request(driver):
     driver.step = "request zone"
     time.sleep(0.1)
     driver.get('https://czds.icann.org/en/request/add')
-    time.sleep(0.1)
+    time.sleep(5)
 
     #select zones
     driver.step = "select zones"
@@ -85,17 +86,18 @@ def request(driver):
     driver.step = "next page 1"
     nextF = driver.find_element_by_id("edit-next1")
     nextF.click()
-    time.sleep(0.1)
+    time.sleep(2)
 
     #agree to terms
     driver.step = "agree to terms"
     termsF = driver.find_element_by_id("edit-agree-tc")
     termsF.click()
+    time.sleep(2)
     #next form page
     driver.step = "next page 2"
     nextF = driver.find_element_by_id("edit-next2")
     nextF.click()
-    time.sleep(0.1)
+    time.sleep(2)
 
     #empty ip field
     driver.step = "blank ip"
@@ -106,7 +108,7 @@ def request(driver):
     driver.step = "final submit"
     requestBF = driver.find_element_by_id("edit-submit")
     requestBF.click()
-    time.sleep(20)
+    time.sleep(60)
 
     #success check
     driver.step = "success check"
