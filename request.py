@@ -86,18 +86,18 @@ def request(driver):
     driver.step = "next page 1"
     nextF = driver.find_element_by_id("edit-next1")
     nextF.click()
-    time.sleep(2)
+    time.sleep(5)
 
     #agree to terms
     driver.step = "agree to terms"
     termsF = driver.find_element_by_id("edit-agree-tc")
     termsF.click()
-    time.sleep(2)
+    time.sleep(5)
     #next form page
     driver.step = "next page 2"
     nextF = driver.find_element_by_id("edit-next2")
     nextF.click()
-    time.sleep(2)
+    time.sleep(5)
 
     #empty ip field
     driver.step = "blank ip"

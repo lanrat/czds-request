@@ -12,4 +12,6 @@ services:
 
     selenium:
         image: selenium/standalone-firefox
+        logging:
+            driver: none
 
