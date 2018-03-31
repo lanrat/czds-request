@@ -3,7 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #echo "starting browser"
-browser_container=$(docker run --rm --name czds-browser -d selenium/standalone-firefox)
+#browser_container=$(docker run --rm --name czds-browser -d selenium/standalone-firefox)
+browser_container=$(docker run --rm --name czds-browser -d selenium/standalone-chrome)
 sleep 30
 
 #echo "starting bot"

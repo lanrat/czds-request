@@ -10,6 +10,12 @@ import sys
 
 path = os.path.dirname(os.path.realpath(__file__))
 
+debug = False
+
+def printd(data):
+    if debug:
+        print(data)
+
 def getDriver():
     driver = webdriver.PhantomJS(path+"/phantomjs")
     driver.set_window_size(1366,768)
@@ -18,7 +24,8 @@ def getDriver():
 
 def getRemoteDriver():
     driver = webdriver.Remote(
-            desired_capabilities=webdriver.DesiredCapabilities.FIREFOX,
+            #desired_capabilities=webdriver.DesiredCapabilities.FIREFOX,
+            desired_capabilities=webdriver.DesiredCapabilities.CHROME,
             command_executor='http://127.0.0.1:4444:/wd/hub'
             )
     time.sleep(0.5)
@@ -34,6 +41,7 @@ def request(driver):
 
     #log in
     driver.step = "log-in"
+    printd(driver.step)
     userF = driver.find_element_by_id("edit-name")
     userF.send_keys(config.username)
     passF = driver.find_element_by_id("edit-pass")
@@ -42,12 +50,14 @@ def request(driver):
 
     #submit
     driver.step = "log-in submit"
+    printd(driver.step)
     submitF = driver.find_element_by_id("edit-submit")
     submitF.click()
     time.sleep(2)
 
     # auth check
     driver.step = "log-in check"
+    printd(driver.step)
     #title = driver.find_element_by_id("page-title")
     #title = driver.find_element_by_class_name('title')
     title = driver.title
@@ -59,12 +69,14 @@ def request(driver):
 
     #request page
     driver.step = "request zone"
+    printd(driver.step)
     time.sleep(0.1)
     driver.get('https://czds.icann.org/en/request/add')
     time.sleep(5)
 
     #select zones
     driver.step = "select zones"
+    printd(driver.step)
     approvedF = driver.find_element_by_id("tld-filter-approved")
     approvedF.click()
     pendingF = driver.find_element_by_id("tld-filter-pending")
@@ -74,44 +86,52 @@ def request(driver):
     if not allF.is_enabled():
         #no zones to request
         driver.step = "no zones found"
+        printd(driver.step)
         return
     allF.click()
     #enter reason
     driver.step = "entering reason"
+    printd(driver.step)
     reasonF = driver.find_element_by_id("edit-reason")
     reasonF.send_keys(config.request_message)
     time.sleep(0.1)
 
     #next form page
     driver.step = "next page 1"
+    printd(driver.step)
     nextF = driver.find_element_by_id("edit-next1")
     nextF.click()
     time.sleep(5)
 
     #agree to terms
     driver.step = "agree to terms"
+    printd(driver.step)
     termsF = driver.find_element_by_id("edit-agree-tc")
     termsF.click()
     time.sleep(5)
     #next form page
     driver.step = "next page 2"
+    printd(driver.step)
     nextF = driver.find_element_by_id("edit-next2")
     nextF.click()
     time.sleep(5)
 
     #empty ip field
     driver.step = "blank ip"
+    printd(driver.step)
     ipF = driver.find_element_by_id("edit-ips-from-request-ip-0")
     ipF.clear()
     time.sleep(0.1)
     #submit
     driver.step = "final submit"
+    printd(driver.step)
     requestBF = driver.find_element_by_id("edit-submit")
     requestBF.click()
     time.sleep(60)
 
     #success check
     driver.step = "success check"
+    printd(driver.step)
     try:
         zonesE = driver.find_element_by_xpath("//p[contains(text(), 'You have requested zone files for the following TLD')]/following-sibling::p")
     except:
@@ -131,6 +151,7 @@ def request(driver):
 def run():
     #driver = getDriver()
     try:
+        printd("getting driver")
         driver = getRemoteDriver()
     except:
         print "FAIL: Unable to connect to Driver"
@@ -138,6 +159,7 @@ def run():
     else:
         try:
             # start fresh
+            printd("deleting cookies and trying requesting driver")
             driver.delete_all_cookies()
             request(driver)
         except:
