@@ -7,6 +7,6 @@ ADD request.py /usr/src/czds-request/
 
 USER 1000
 
-WORKDIR /usr/src/czds-request/
+WORKDIR /tmp/
 
-CMD ["python", "request.py"]
+CMD ["python", "/usr/src/czds-request/request.py"]
