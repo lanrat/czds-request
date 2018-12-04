@@ -3,10 +3,10 @@ MAINTAINER Ian Foster <ian@vorsk.com>
 
 RUN pip install selenium
 
-ADD request.py /usr/src/czds-request/
+ADD request.py request-run.sh /usr/src/czds-request/
 
 USER 1000
 
 WORKDIR /tmp/
 
-CMD ["python", "/usr/src/czds-request/request.py"]
+CMD ["/usr/src/czds-request/request-run.sh"]

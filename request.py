@@ -7,6 +7,8 @@ import traceback
 from selenium import webdriver
 import random
 import sys
+from selenium.common.exceptions import NoSuchElementException        
+
 
 path = os.path.dirname(os.path.realpath(__file__))
 
@@ -38,6 +40,16 @@ def request(driver):
     if driver.page_source == "<html><head></head><body></body></html>":
         print "Got blank page, exiting"
         return
+
+    # dismiss modal if exists
+    driver.step = "dismiss"
+    try:
+        d = driver.find_element_by_id("cboxClose")
+	#print "found box to dismiss"
+	d.click()
+	time.sleep(2.0)
+    except NoSuchElementException:
+        pass
 
     #log in
     driver.step = "log-in"
@@ -138,8 +150,8 @@ def request(driver):
         #debug
         print "unable to find result text"
         print ''
-        driver.save_screenshot(path+'/error.png')
-        with open(path+"/error.html", "w") as errorHTML:
+        driver.save_screenshot("/tmp/error.png")
+        with open("/tmp/error.html", "w") as errorHTML:
             errorHTML.write(driver.page_source.encode('utf-8').strip())
     else:
         zonesNum = len(zonesE.text.split())
@@ -168,7 +180,8 @@ def run():
             print "step: "+ driver.step
             print ""
             traceback.print_exc()
-            with open(path+"/error.html", "w") as errorHTML:
+            driver.save_screenshot("/tmp/error.png")
+            with open("/tmp/error.html", "w") as errorHTML:
                 errorHTML.write(driver.page_source.encode('utf-8').strip())
             # print repr(driver.page_source)
         finally:
