@@ -1,7 +1,9 @@
 # czds-request
-Automatically request and renew czdap zones from https://czds.icann.org/
+Automatically request and renew czds zones from https://czds.icann.org/
 
-Uses Selenium inside docker to controll a headless web browser and request new zones.
+Uses Selenium inside docker to control a headless web browser and request new zones.
+
+# DEPRECATED Please use: [https://github.com/lanrat/czds](https://github.com/lanrat/czds)
 
 ## How to use
 
